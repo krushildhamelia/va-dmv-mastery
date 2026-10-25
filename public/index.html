@@ -2,7 +2,10 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+  <meta name="theme-color" content="#002868">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <title>Virginia DMV Study Guide & Daily Mastery</title>
   <link rel="stylesheet" href="styles.css">
 </head>
@@ -15,26 +18,26 @@
         <span class="brand-badge">VA DMV</span>
         <div class="brand-title">
           Driver's Study Guide
-          <span class="brand-subtitle">Official Virginia Knowledge Examination Prep</span>
+          <span class="brand-subtitle">Virginia Knowledge Exam Prep</span>
         </div>
       </a>
 
       <div class="header-stats">
         <div class="stat-pill stat-streak" title="Consecutive daily study streak">
-          🔥 <span id="streak-val">1</span> Day Streak
+          🔥 <span id="streak-val">1</span><span class="pill-label"> Day Streak</span>
         </div>
         <div class="stat-pill" title="Today's question practice progress">
-          🎯 Today: <span id="today-goal-val">0/15</span>
+          🎯 <span id="today-goal-val">0/15</span>
         </div>
-        <div class="stat-pill" title="Overall question accuracy">
-          🏆 Mastery: <span id="mastery-val">100%</span>
+        <div class="stat-pill stat-mastery" title="Overall question accuracy">
+          🏆 <span id="mastery-val">100%</span>
         </div>
         <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">🌙</button>
       </div>
     </div>
 
-    <!-- Navigation Tabs -->
-    <nav class="nav-bar">
+    <!-- Desktop Navigation Bar -->
+    <nav class="nav-bar desktop-nav">
       <button class="nav-item active" data-tab="tab-dashboard">🏠 Dashboard</button>
       <button class="nav-item" data-tab="tab-manual">📖 Study Manual</button>
       <button class="nav-item" data-tab="tab-quiz" onclick="document.getElementById('action-daily').click();">🎯 Practice Quiz</button>
@@ -48,10 +51,10 @@
     <section id="tab-dashboard" class="tab-pane active">
       <!-- Daily Workout Banner -->
       <div class="daily-banner">
-        <div>
-          <h2>Daily Driving Mastery Workout</h2>
+        <div class="banner-left">
+          <h2>Daily Driving Mastery</h2>
           <p id="banner-goal-text">Complete 15 questions each day to build rock-solid recall and pass your Virginia Knowledge Exam on the first attempt.</p>
-          <div style="margin-top: 18px;">
+          <div class="banner-btn-wrap">
             <button class="daily-btn" id="btn-start-daily">▶ Start Today's 15-Question Workout</button>
           </div>
         </div>
@@ -87,7 +90,7 @@
         <div class="action-card" id="action-exam">
           <div>
             <div class="action-icon" style="background:#fef3c7; color:#d97706;">🚦</div>
-            <div class="action-title">Official Virginia Exam Simulator</div>
+            <div class="action-title">Official Exam Simulator</div>
             <div class="action-desc">Part 1: 10 Traffic Signs (100% required) + Part 2: 30 General Knowledge questions (80% to pass).</div>
           </div>
           <div class="action-meta">Take Exam &rarr;</div>
@@ -117,14 +120,24 @@
 
     <!-- TAB 2: STUDY MANUAL -->
     <section id="tab-manual" class="tab-pane">
+      <!-- Mobile Quick Section Switcher -->
+      <div class="mobile-section-nav">
+        <label for="mobile-section-select" class="mobile-section-label">
+          <span>📑</span> Jump to Section:
+        </label>
+        <select id="mobile-section-select" class="mobile-section-select" aria-label="Select manual section">
+          <!-- Populated by dmv-app.js -->
+        </select>
+      </div>
+
       <div class="manual-layout">
-        <!-- Sidebar Navigation -->
+        <!-- Desktop Sidebar Navigation -->
         <aside class="manual-sidebar">
           <div class="sidebar-title">
             <span>📑</span> Table of Contents
           </div>
           <div id="manual-sidebar-list">
-            <!-- Populated dynamically by app.js -->
+            <!-- Populated dynamically by dmv-app.js -->
           </div>
         </aside>
 
@@ -175,7 +188,7 @@
 
         <div class="quiz-footer">
           <button class="btn-secondary" id="btn-bookmark-question">☆ Bookmark</button>
-          <div style="display:flex; gap:10px;">
+          <div class="quiz-footer-actions">
             <button class="btn-secondary" id="btn-quit-quiz">Quit</button>
             <button class="btn-primary" id="btn-next-question" disabled>Next Question &rarr;</button>
           </div>
@@ -196,9 +209,9 @@
 
     <!-- TAB 4: FLASHCARDS -->
     <section id="tab-flashcards" class="tab-pane">
-      <div style="text-align:center; margin-bottom:20px;">
-        <h2 style="font-size:24px; font-weight:800; margin-bottom:6px;">Traffic Signs Flashcard Drill</h2>
-        <p style="color:var(--text-muted); font-size:14px;">Virginia requires a 100% score on traffic signs before taking the general knowledge exam.</p>
+      <div style="text-align:center; margin-bottom:16px;">
+        <h2 style="font-size:22px; font-weight:800; margin-bottom:4px;">Traffic Signs Flashcards</h2>
+        <p style="color:var(--text-muted); font-size:13px;">Virginia requires a 100% score on traffic signs before taking the general exam.</p>
         <div style="font-weight:700; margin-top:8px; color:var(--accent);" id="flashcard-progress">Sign 1 of 50</div>
       </div>
 
@@ -207,66 +220,90 @@
           <!-- Front Face -->
           <div class="flashcard-face flashcard-front">
             <img class="flashcard-img" id="flashcard-front-img" src="" alt="Traffic Sign">
-            <h3 id="flashcard-front-text" style="font-size:17px; font-weight:700;">What does this sign mean?</h3>
-            <div class="flashcard-hint">Click card to reveal answer</div>
+            <h3 id="flashcard-front-text" style="font-size:16px; font-weight:700;">What does this sign mean?</h3>
+            <div class="flashcard-hint">Tap card to reveal answer</div>
           </div>
 
           <!-- Back Face -->
           <div class="flashcard-face flashcard-back">
-            <div style="font-size:13px; font-weight:800; color:var(--virginia-gold); text-transform:uppercase; margin-bottom:8px;">Correct Answer</div>
-            <h3 id="flashcard-back-answer" style="font-size:18px; font-weight:800; color:var(--success); margin-bottom:14px;">Sign Meaning</h3>
-            <p id="flashcard-back-feedback" style="font-size:14px; line-height:1.5; color:var(--text-muted);">Feedback explanation</p>
+            <div style="font-size:12px; font-weight:800; color:var(--virginia-gold); text-transform:uppercase; margin-bottom:8px;">Correct Answer</div>
+            <h3 id="flashcard-back-answer" style="font-size:17px; font-weight:800; color:var(--success); margin-bottom:12px;">Sign Meaning</h3>
+            <p id="flashcard-back-feedback" style="font-size:13px; line-height:1.5; color:var(--text-muted);">Feedback explanation</p>
           </div>
         </div>
       </div>
 
-      <div style="display:flex; justify-content:center; gap:16px; margin-top:24px;">
-        <button class="btn-secondary" id="btn-card-review" style="border-color:#fca5a5; color:#dc2626;">✗ Need Review</button>
-        <button class="btn-secondary" id="btn-flip-card">🔄 Flip Card</button>
-        <button class="btn-primary" id="btn-card-know" style="background:var(--success);">✓ I Know This</button>
+      <div class="flashcard-actions">
+        <button class="btn-secondary btn-card-action" id="btn-card-review" style="border-color:#fca5a5; color:#dc2626;">✗ Need Review</button>
+        <button class="btn-secondary btn-card-flip" id="btn-flip-card">🔄 Flip</button>
+        <button class="btn-primary btn-card-action" id="btn-card-know" style="background:var(--success);">✓ I Know This</button>
       </div>
     </section>
 
     <!-- TAB 5: ANALYTICS -->
     <section id="tab-analytics" class="tab-pane">
       <div style="max-width:800px; margin:0 auto;">
-        <h2 style="font-size:24px; font-weight:800; margin-bottom:20px;">Your Learning Progress & Statistics</h2>
+        <h2 style="font-size:22px; font-weight:800; margin-bottom:16px;">Learning Progress & Stats</h2>
 
         <!-- Stats Overview Cards -->
-        <div class="action-grid" style="grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); margin-bottom:28px;">
-          <div class="action-card" style="padding:16px;">
-            <div style="font-size:13px; color:var(--text-muted); font-weight:600;">Total Questions Answered</div>
-            <div id="stat-total-answered" style="font-size:28px; font-weight:800; margin-top:4px;">0</div>
+        <div class="action-grid stats-grid" style="grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); margin-bottom:24px;">
+          <div class="action-card stat-metric-card">
+            <div class="metric-label">Questions Answered</div>
+            <div id="stat-total-answered" class="metric-val">0</div>
           </div>
-          <div class="action-card" style="padding:16px;">
-            <div style="font-size:13px; color:var(--text-muted); font-weight:600;">Overall Accuracy</div>
-            <div id="stat-accuracy" style="font-size:28px; font-weight:800; margin-top:4px; color:var(--success);">0%</div>
+          <div class="action-card stat-metric-card">
+            <div class="metric-label">Accuracy Rate</div>
+            <div id="stat-accuracy" class="metric-val" style="color:var(--success);">0%</div>
           </div>
-          <div class="action-card" style="padding:16px;">
-            <div style="font-size:13px; color:var(--text-muted); font-weight:600;">Daily Study Streak</div>
-            <div id="stat-daily-streak" style="font-size:28px; font-weight:800; margin-top:4px; color:#ea580c;">1 Day</div>
+          <div class="action-card stat-metric-card">
+            <div class="metric-label">Daily Streak</div>
+            <div id="stat-daily-streak" class="metric-val" style="color:#ea580c;">1 Day</div>
           </div>
-          <div class="action-card" style="padding:16px;">
-            <div style="font-size:13px; color:var(--text-muted); font-weight:600;">Mistakes to Review</div>
-            <div id="stat-mistakes-count" style="font-size:28px; font-weight:800; margin-top:4px; color:var(--danger);">0</div>
+          <div class="action-card stat-metric-card">
+            <div class="metric-label">Mistakes in Bank</div>
+            <div id="stat-mistakes-count" class="metric-val" style="color:var(--danger);">0</div>
           </div>
         </div>
 
         <!-- Category Mastery Breakdown -->
-        <div style="background:var(--bg-surface); border:1px solid var(--border); border-radius:var(--radius); padding:24px; margin-bottom:24px;">
-          <h3 style="font-size:17px; font-weight:800; margin-bottom:16px;">Category Mastery Breakdown</h3>
+        <div class="analytics-card">
+          <h3 style="font-size:16px; font-weight:800; margin-bottom:16px;">Category Mastery Breakdown</h3>
           <div id="category-stats-list">
-            <!-- Injected by app.js -->
+            <!-- Injected by dmv-app.js -->
           </div>
         </div>
 
         <!-- Management Controls -->
-        <div style="display:flex; justify-content:flex-end;">
-          <button class="btn-secondary" id="btn-reset-stats" style="color:var(--danger); font-size:13px;">Reset All Study Progress</button>
+        <div style="display:flex; justify-content:flex-end; margin-top:20px;">
+          <button class="btn-secondary" id="btn-reset-stats" style="color:var(--danger); font-size:13px;">Reset Study Progress</button>
         </div>
       </div>
     </section>
   </main>
+
+  <!-- Mobile Bottom Navigation Bar -->
+  <nav class="bottom-nav">
+    <button class="bottom-nav-item active" data-tab="tab-dashboard" aria-label="Home Dashboard">
+      <span class="bottom-nav-icon">🏠</span>
+      <span class="bottom-nav-label">Home</span>
+    </button>
+    <button class="bottom-nav-item" data-tab="tab-manual" aria-label="Study Manual">
+      <span class="bottom-nav-icon">📖</span>
+      <span class="bottom-nav-label">Manual</span>
+    </button>
+    <button class="bottom-nav-item" data-tab="tab-quiz" onclick="document.getElementById('action-daily').click();" aria-label="Daily Practice Quiz">
+      <span class="bottom-nav-icon">🎯</span>
+      <span class="bottom-nav-label">Quiz</span>
+    </button>
+    <button class="bottom-nav-item" data-tab="tab-flashcards" onclick="document.getElementById('action-flashcards').click();" aria-label="Traffic Signs Flashcards">
+      <span class="bottom-nav-icon">🃏</span>
+      <span class="bottom-nav-label">Cards</span>
+    </button>
+    <button class="bottom-nav-item" data-tab="tab-analytics" aria-label="Progress & Analytics">
+      <span class="bottom-nav-icon">📊</span>
+      <span class="bottom-nav-label">Stats</span>
+    </button>
+  </nav>
 
   <!-- Embed Data & Application Engine -->
   <script src="data.js"></script>

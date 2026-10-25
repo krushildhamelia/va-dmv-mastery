@@ -181,6 +181,7 @@
     btnSummaryAction: document.getElementById('btn-summary-action'),
     // Manual
     manualSidebarList: document.getElementById('manual-sidebar-list'),
+    mobileSectionSelect: document.getElementById('mobile-section-select'),
     manualArticleContent: document.getElementById('manual-article-content'),
     manualQuizBtn: document.getElementById('manual-quiz-btn'),
     // Flashcards
@@ -244,7 +245,7 @@
 
   // --- NAVIGATION ---
   function switchTab(tabId) {
-    els.navItems.forEach(item => {
+    document.querySelectorAll('.nav-item, .bottom-nav-item').forEach(item => {
       item.classList.toggle('active', item.dataset.tab === tabId);
     });
     els.tabPanes.forEach(pane => {
@@ -260,6 +261,9 @@
   // --- MANUAL READER ---
   function buildManualSidebar() {
     els.manualSidebarList.innerHTML = '';
+    if (els.mobileSectionSelect) {
+      els.mobileSectionSelect.innerHTML = '';
+    }
 
     sectionGroups.forEach(grp => {
       const groupEl = document.createElement('div');
@@ -270,21 +274,46 @@
       header.textContent = grp.title;
       groupEl.appendChild(header);
 
+      let optgroup = null;
+      if (els.mobileSectionSelect) {
+        optgroup = document.createElement('optgroup');
+        optgroup.label = grp.title;
+      }
+
       const subSections = allSections.filter(s => s.section === grp.id);
       subSections.forEach(sub => {
+        const key = `${sub.section}.${sub.subSectionID}`;
+
+        // Desktop button
         const btn = document.createElement('button');
         btn.className = 'subsection-nav-btn';
-        const key = `${sub.section}.${sub.subSectionID}`;
         btn.dataset.key = key;
         btn.textContent = `${key} - ${sub.subSectionTitle}`;
         btn.addEventListener('click', () => {
           renderManualSection(key);
         });
         groupEl.appendChild(btn);
+
+        // Mobile option
+        if (optgroup) {
+          const opt = document.createElement('option');
+          opt.value = key;
+          opt.textContent = `${key} - ${sub.subSectionTitle}`;
+          optgroup.appendChild(opt);
+        }
       });
 
       els.manualSidebarList.appendChild(groupEl);
+      if (optgroup && els.mobileSectionSelect) {
+        els.mobileSectionSelect.appendChild(optgroup);
+      }
     });
+
+    if (els.mobileSectionSelect) {
+      els.mobileSectionSelect.onchange = (e) => {
+        renderManualSection(e.target.value);
+      };
+    }
   }
 
   function renderManualSection(key) {
@@ -295,6 +324,10 @@
     document.querySelectorAll('.subsection-nav-btn').forEach(btn => {
       btn.classList.toggle('active', btn.dataset.key === key);
     });
+
+    if (els.mobileSectionSelect) {
+      els.mobileSectionSelect.value = key;
+    }
 
     const [sec, sub] = key.split('.');
     const found = allSections.find(s => s.section === sec && s.subSectionID === sub);
@@ -665,8 +698,8 @@
 
   // --- EVENT LISTENERS ---
   function setupEventListeners() {
-    // Navigation
-    els.navItems.forEach(item => {
+    // Navigation (desktop + mobile bottom nav)
+    document.querySelectorAll('.nav-item, .bottom-nav-item').forEach(item => {
       item.addEventListener('click', () => {
         playTone('click');
         switchTab(item.dataset.tab);
