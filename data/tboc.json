@@ -1,0 +1,162 @@
+{
+  "_id": {
+    "$oid": "55e63bc18c68d77b4b69b737"
+  },
+  "id": "54ff09a22299d67b55f54ad3",
+  "manual": {
+    "code": "1",
+    "description": "Driver's Study Guide"
+  },
+  "manualData": [
+    {
+      "manualID": "1",
+      "noQuiz": [
+        "1.1",
+        "1.2",
+        "1.3",
+        "6.1",
+        "7.1"
+      ],
+      "sections": [
+        {
+          "sectionID": "1",
+          "sectionTitle": "About DMV Testing",
+          "symbol": "edit"
+        },
+        {
+          "sectionID": "2",
+          "sectionTitle": "Signals, Signs and Pavement Markings",
+          "symbol": "signIcon"
+        },
+        {
+          "sectionID": "3",
+          "sectionTitle": "Safe Driving",
+          "symbol": "steeringWheel"
+        },
+        {
+          "sectionID": "4",
+          "sectionTitle": "Seat Belts, Airbags and Child Safety Seats",
+          "symbol": "seatBelt"
+        },
+        {
+          "sectionID": "5",
+          "sectionTitle": "Penalties",
+          "symbol": "exclamation-circle"
+        },
+        {
+          "sectionID": "6",
+          "sectionTitle": "License Types",
+          "symbol": "license"
+        },
+        {
+          "sectionID": "7",
+          "sectionTitle": "Other Information",
+          "symbol": "info"
+        },
+        {
+          "sectionID": "TBOC",
+          "sectionTitle": "Table of Contents",
+          "symbol": "th-list"
+        }
+      ],
+      "symbol": "dmv-car",
+      "title": "Driver's Study Guide",
+      "totalSections": "6"
+    },
+    {
+      "manualID": "2",
+      "noQuiz": [
+        "1.1",
+        "2.1",
+        "14.1",
+        "15.1"
+      ],
+      "sections": [
+        {
+          "sectionID": "1",
+          "sectionTitle": "Introduction",
+          "symbol": "info-circle"
+        },
+        {
+          "sectionID": "2",
+          "sectionTitle": "Licensing Requirements",
+          "symbol": "edit"
+        },
+        {
+          "sectionID": "3",
+          "sectionTitle": "Preparing to Ride",
+          "symbol": "motorcycle-helmet"
+        },
+        {
+          "sectionID": "4",
+          "sectionTitle": "Control for Safety",
+          "symbol": "signIcon-noOffset"
+        },
+        {
+          "sectionID": "5",
+          "sectionTitle": "See and Be Seen",
+          "symbol": "eye"
+        },
+        {
+          "sectionID": "6",
+          "sectionTitle": "Keeping Your Distance",
+          "symbol": "arrows-v"
+        },
+        {
+          "sectionID": "7",
+          "sectionTitle": "Dangerous Surfaces",
+          "symbol": "road"
+        },
+        {
+          "sectionID": "8",
+          "sectionTitle": "Riding at Night",
+          "symbol": "halfmoon"
+        },
+        {
+          "sectionID": "9",
+          "sectionTitle": "Emergencies",
+          "symbol": "exclamation-circle"
+        },
+        {
+          "sectionID": "10",
+          "sectionTitle": "Passengers and Cargo",
+          "symbol": "user"
+        },
+        {
+          "sectionID": "11",
+          "sectionTitle": "Group Riding",
+          "symbol": "user-plus"
+        },
+        {
+          "sectionID": "12",
+          "sectionTitle": "Being in Shape to Ride",
+          "symbol": "alcohol"
+        },
+        {
+          "sectionID": "13",
+          "sectionTitle": "Your Motorcycle",
+          "symbol": "motorcycle"
+        },
+        {
+          "sectionID": "14",
+          "sectionTitle": "Earning Your License",
+          "symbol": "license"
+        },
+        {
+          "sectionID": "15",
+          "sectionTitle": "Rider Skills Training",
+          "symbol": "ribbon"
+        },
+        {
+          "sectionID": "TBOC",
+          "sectionTitle": "Table of Contents",
+          "symbol": "th-list"
+        }
+      ],
+      "symbol": "motorcycle",
+      "title": "Motorcycle Study Guide",
+      "totalSections": "15"
+    }
+  ],
+  "tbocID": "1"
+}

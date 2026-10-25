@@ -1,0 +1,19 @@
+{
+  "name": "va-dmv-mastery",
+  "version": "1.0.0",
+  "description": "Virginia DMV Driver's Study Guide Clone & Daily Learning System",
+  "type": "module",
+  "scripts": {
+    "start": "node server.mjs",
+    "dev": "node server.mjs"
+  },
+  "keywords": [
+    "dmv",
+    "virginia",
+    "study-guide",
+    "flashcards",
+    "exam-prep"
+  ],
+  "author": "",
+  "license": "MIT"
+}
