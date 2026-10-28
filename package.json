@@ -4,6 +4,7 @@
   "description": "Virginia DMV Driver's Study Guide Clone & Daily Learning System",
   "scripts": {
     "start": "node scripts/server.mjs",
+    "normalize-data": "node scripts/normalize-data.mjs",
     "build": "echo Static site ready"
   },
   "keywords": [

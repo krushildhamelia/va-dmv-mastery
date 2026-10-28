@@ -458,7 +458,8 @@
     // Answers List
     els.quizAnswersList.innerHTML = '';
     const letters = ['A', 'B', 'C', 'D'];
-    q.answers.forEach((ans, idx) => {
+    const validAnswers = (q.answers || []).filter(ans => ans.text && ans.text.trim().length > 0);
+    validAnswers.forEach((ans, idx) => {
       const btn = document.createElement('button');
       btn.className = 'answer-btn';
       btn.dataset.value = ans.value;
@@ -474,16 +475,26 @@
     updateBookmarkButton(q._id);
   }
 
+  function getNormalizedCorrectAnswer(question) {
+    const raw = String(question && question.correctAnswer != null ? question.correctAnswer : '').trim();
+    // Support legacy Virginia DMV codes if present: 5=True (1), 6=False (2), 7=All of the above (4)
+    if (raw === '5') return '1';
+    if (raw === '6') return '2';
+    if (raw === '7') return '4';
+    return raw;
+  }
+
   function selectAnswer(selectedValue, question) {
     if (answeredState) return;
     answeredState = true;
 
-    const isCorrect = String(selectedValue) === String(question.correctAnswer);
+    const correctVal = getNormalizedCorrectAnswer(question);
+    const isCorrect = String(selectedValue) === correctVal;
     const buttons = els.quizAnswersList.querySelectorAll('.answer-btn');
 
     buttons.forEach(btn => {
       btn.disabled = true;
-      if (String(btn.dataset.value) === String(question.correctAnswer)) {
+      if (String(btn.dataset.value) === correctVal) {
         btn.classList.add('correct');
       } else if (String(btn.dataset.value) === String(selectedValue)) {
         btn.classList.add('incorrect');
@@ -652,7 +663,8 @@
     };
     els.flashcardFrontText.textContent = q.question;
 
-    const correctAns = q.answers.find(a => String(a.value) === String(q.correctAnswer));
+    const targetCorrect = getNormalizedCorrectAnswer(q);
+    const correctAns = (q.answers || []).find(a => String(a.value) === targetCorrect);
     els.flashcardBackAnswer.textContent = correctAns ? correctAns.text : 'Official Sign Meaning';
     els.flashcardBackFeedback.textContent = q.feedback || '';
   }
@@ -753,10 +765,21 @@
     window.addEventListener('keydown', (e) => {
       if (document.getElementById('tab-quiz').classList.contains('active')) {
         if (!answeredState) {
+          const keyLower = e.key.toLowerCase();
+          const buttons = els.quizAnswersList.querySelectorAll('.answer-btn');
+
           if (['1', '2', '3', '4'].includes(e.key)) {
             const idx = parseInt(e.key, 10) - 1;
-            const buttons = els.quizAnswersList.querySelectorAll('.answer-btn');
             if (buttons[idx]) buttons[idx].click();
+          } else if (['a', 'b', 'c', 'd'].includes(keyLower)) {
+            const idx = { a: 0, b: 1, c: 2, d: 3 }[keyLower];
+            if (buttons[idx]) buttons[idx].click();
+          } else if (keyLower === 't') {
+            const btn = Array.from(buttons).find(b => b.textContent.includes('True'));
+            if (btn) btn.click();
+          } else if (keyLower === 'f') {
+            const btn = Array.from(buttons).find(b => b.textContent.includes('False'));
+            if (btn) btn.click();
           }
         } else if (e.key === 'Enter') {
           if (!els.btnNextQuestion.disabled) nextQuestion();
